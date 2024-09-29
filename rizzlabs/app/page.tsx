@@ -10,7 +10,7 @@ import {
   SelectLabel,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Analysis from "@/components/analysis";
 
 enum Modes {
@@ -67,12 +67,11 @@ export default function Home() {
           </div>
         );
       case Modes.ANALYSIS:
-        <div className="flex h-full flex-col bg-neutral-800"> 
+        <div className="flex h-full flex-col bg-neutral-800">
           <Analysis />
-        </div>
+        </div>;
       case Modes.SUGGESTIONS:
-        <div className="flex h-full flex-col bg-neutral-800"> 
-        </div>
+        <div className="flex h-full flex-col bg-neutral-800"></div>;
     }
   };
 
