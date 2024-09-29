@@ -55,6 +55,7 @@ export default function Home() {
   };
 
   const [messages, setMessages] = useState([
+    { role: 'system', content: [{ type: 'text', text: "You are a very proficient actor who has been hired to help the user practice interactions with a certain person. You know how the person you are trying to emulate speaks because the next few lines issued by you have been preprogrammed in as lines the person you are trying to emulate has actually said, and you will do your utmost to ensure that future messages align with the exact personality, style, formatting, etc. as from past messages in the most convincing act of the person possible. You will respond to all messages by the user as if you were actually this person who you are acting out." }] },
     { role: 'user', content: [{ type: 'text', text: "Hey, how are you?" }] },
     { role: 'assistant', content: [{ type: 'text', text: "omg ily <3" }] },
     { role: 'user', content: [{ type: 'text', text: "ilysm too <3 <3" }] },
@@ -69,8 +70,9 @@ export default function Home() {
 
       try {
         const completion = await openai.chat.completions.create({
-          model: "gpt-4",
+          model: "gpt-4o-mini",
           messages: [
+            ...messages,
             { role: "user", content: newMessage }
           ]
         });

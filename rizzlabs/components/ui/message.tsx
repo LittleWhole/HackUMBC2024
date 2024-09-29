@@ -7,9 +7,13 @@ type MessageProps = {
 
 const Message: React.FC<MessageProps> = ({ role, content }) => {
   return (
-    <div style={{ textAlign: role === 'user' ? 'right' : 'left', marginBottom: '10px' }}>
+    <div className={`flex w-full mb-4 ${
+      role==='user' ? "justify-end" : "justify-start"
+    }`}>
       {content.map((item, idx) => (
-        <div key={idx} style={{ backgroundColor: role === 'user' ? '#e0e0e0' : '#f0f0f0', padding: '10px', borderRadius: '5px', display: 'inline-block' }}>
+        <div key={idx} className={`max-w-xs break-words rounded-t-xl p-3 ${
+          role === 'user' ? "bg-green-600 text-white  rounded-bl-xl" : "bg-neutral-700 text-white  rounded-br-xl"
+        }`}>
           {item.text}
         </div>
       ))}
