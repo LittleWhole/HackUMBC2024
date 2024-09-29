@@ -68,7 +68,7 @@ export default function Analysis({ texts }: { texts: Array<Text> }) {
             <div className="space-y-4">
                 {texts.map((text, index) => (
                     <div key={index} className={`flex flex-col space-y-2 ${text.party === Party.USER ? 'items-end' : 'items-start'}`}>
-                        <div className={`bg-gray-700 p-4 rounded-lg shadow-md hover:bg-gray-600 hover:shadow-lg transition duration-300 ${text.party === Party.USER ? 'bg-blue-500' : 'bg-gray-700'}`}>
+                        <div className={`${text.party === Party.USER ? `bg-pink-700` : `bg-gray-700`} p-4 rounded-lg shadow-md hover:bg-gray-600 hover:shadow-lg transition duration-300 ${text.party === Party.USER ? 'bg-blue-500' : 'bg-gray-700'}`}>
                             <p className="text-lg">{text.content}</p>
                         </div>
                         <div className="flex space-x-2">

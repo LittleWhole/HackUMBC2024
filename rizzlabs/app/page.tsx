@@ -65,6 +65,46 @@ export default function Home() {
             commentary: "Great response!"
           },
         },
+        {
+          content: "Test message 1",
+          party: Party.USER,
+          analysis: {
+            sentiment: Sentiment.POSITIVE,
+            rizzscore: 95,
+            status: Status.EXCELLENT,
+            commentary: "Great response!!!!!!! Because aaaaa and bbbbb"
+          },
+        },
+        {
+          content: "Test message 2",
+          party: Party.OTHER,
+          analysis: {
+            sentiment: Sentiment.POSITIVE,
+            rizzscore: 95,
+            status: Status.EXCELLENT,
+            commentary: "Great response!!!! Because aaaaa and bbbbb"
+          },
+        },
+        {
+          content: "Test message 3",
+          party: Party.USER,
+          analysis: {
+            sentiment: Sentiment.NEGATIVE,
+            rizzscore: 12,
+            status: Status.BLUNDER,
+            commentary: "Horrible response because xxxx and yyyyy and zzzz"
+          },
+        },
+        {
+          content: "Test message 4",
+          party: Party.OTHER,
+          analysis: {
+            sentiment: Sentiment.NEGATIVE,
+            rizzscore: 12,
+            status: Status.BLUNDER,
+            commentary: "Horrible response because xxxx and yyyyy and zzzz"
+          },
+        },
       ]));
 
       setTexts(JSON.parse(localStorage.getItem("conversation")!));

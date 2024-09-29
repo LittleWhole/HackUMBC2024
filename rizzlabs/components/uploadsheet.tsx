@@ -44,7 +44,13 @@ export default function UploadSheet(setConvo: Dispatch<SetStateAction<never[]>>)
                     </div>
                     <SheetFooter>
                         <SheetClose asChild>
+                            <div className="flex flex-row">
                             <Button type="button" onClick={handleSave}>Save changes</Button>
+                            <div className="m-2"></div>
+                            <p>or</p>
+                            <div className="m-2"></div>
+                            <Button type="button" onClick={handleSave}>Upload image</Button>
+                            </div>
                         </SheetClose>
                     </SheetFooter>
                 </SheetContent>
