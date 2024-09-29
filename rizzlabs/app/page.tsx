@@ -10,8 +10,11 @@ import {
   SelectLabel,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Analysis from "@/components/analysis";
+import { Party } from "@/types";
+import { Sentiment } from "@/types";
+import { Status } from "@/types";
 
 enum Modes {
   ANALYSIS,
@@ -67,9 +70,30 @@ export default function Home() {
           </div>
         );
       case Modes.ANALYSIS:
-        <div className="flex h-full flex-col bg-neutral-800"> 
-          <Analysis />
-        </div>
+        return(<div className="flex h-full flex-col bg-neutral-800"> 
+          <Analysis texts={[
+            {
+              content: "Hello, how are you?",
+              party: Party.USER,
+              analysis: {
+                sentiment: Sentiment.POSITIVE,
+                rizzscore: 60,
+                status: Status.GOOD,
+                commentary: "Good message lol"
+              },
+            },
+            {
+              content: "I am doing well, thank you for asking.",
+              party: Party.OTHER,
+              analysis: {
+                sentiment: Sentiment.POSITIVE,
+                rizzscore: 90,
+                status: Status.EXCELLENT,
+                commentary: "Great response!"
+              },
+            },
+          ]}/>
+        </div>);
       case Modes.SUGGESTIONS:
         <div className="flex h-full flex-col bg-neutral-800"> 
         </div>
