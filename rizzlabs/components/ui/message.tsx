@@ -14,8 +14,8 @@ const Message: React.FC<MessageProps> = ({ text, isSender }) => {
       }`}
     >
       <div
-        className={`max-w-xs break-words rounded-lg p-3 ${
-          isSender ? "bg-green-400 text-white" : "bg-gray-200 text-gray-900"
+        className={`max-w-xs break-words rounded-t-xl p-3 ${
+          isSender ? "bg-green-600 text-white  rounded-bl-xl" : "bg-neutral-700 text-white  rounded-br-xl"
         }`}
       >
         <p>{text}</p>

@@ -17,7 +17,7 @@ import { Sentiment } from "@/types";
 import { Status } from "@/types";
 
 import ChatWindow from "../components/ui/chat-window";
-import Message from "../components/ui/chat-window";
+import Message from "../components/ui/message";
 enum Modes {
   ANALYSIS,
   PRACTICE,
@@ -75,8 +75,11 @@ export default function Home() {
     switch (mode) {
       case Modes.PRACTICE:
         return (
-          <div className="flex flex-col bg-neutral-800">
-            <div className="flex flex-row h-full basis-1/8"></div>
+          <div className="flex h-full flex-col bg-neutral-800">
+            <h1 className="text-3xl font-bold text-white px-2 mt-8">Practice</h1>
+            <p className="text-white px-2">In practice mode, the other party is emulated by this chatbot based on previous messages.</p>
+            <div className="flex flex-row h-full basis-1/8">
+            <ChatWindow messages={messages}></ChatWindow></div>
             <div className="flex flex-row bottom-0 left-1/2 p-2 mb-4 rounded-lg bg-neutral-900">
               <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
                 <Button className="px-3 py-3 ml-2">
@@ -150,9 +153,9 @@ export default function Home() {
       </div>
 
       <div className="flex basis-6/12 flex-col bg-neutral-800">
-        <ChatWindow messages={messages}></ChatWindow>
         {renderSwitch(mode)}
       </div>
+      <div className="flex basis-3/12 flex-col bg-neutral-800"></div>
     </div>
   );
 }
