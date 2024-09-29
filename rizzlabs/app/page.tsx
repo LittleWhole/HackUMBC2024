@@ -15,6 +15,10 @@ import Analysis from "@/components/analysis";
 import { Party } from "@/types";
 import { Sentiment } from "@/types";
 import { Status } from "@/types";
+import axios from 'axios';
+import OpenAI from "openai";
+const openai = new OpenAI({ apiKey: "", dangerouslyAllowBrowser: true });
+
 
 import ChatWindow from "../components/ui/chat-window";
 import Message from "../components/ui/message";
@@ -57,11 +61,25 @@ export default function Home() {
     { text: "Doing well, thanks!", isSender: false },
   ]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (newMessage.trim()) {
-      //TODO: SEND 'newMessage' data to API and do stuff
-      setMessages([...messages, { text: newMessage, isSender: true }]);
+      const userMessage = { text: newMessage, isSender: true };
+      setMessages([...messages, userMessage]);
       setNewMessage("");
+
+      try {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o",
+          messages: [
+              {"role": "user", "content": newMessage}
+          ]
+      });
+
+        const botMessage = { text: completion.choices[0].message.content!.trim(), isSender: false };
+        setMessages(prevMessages => [...prevMessages, botMessage]);
+      } catch (error) {
+        console.error("Error sending message to OpenAI API:", error);
+      }
     }
   };
 
@@ -89,6 +107,7 @@ export default function Home() {
                   type="text"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
                   placeholder="Type a message..."
                   className="h-full flex-1 px-4 py-2 bg-transparent outline-none text-white"
                 />
