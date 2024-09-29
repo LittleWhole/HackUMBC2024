@@ -22,6 +22,15 @@ enum Modes {
 export default function Home() {
   const [mode, setMode] = useState(Modes.ANALYSIS);
 
+  useEffect(() => {
+    fetch("http://localhost:8080/api/home")
+      .then((response) => response.json())
+      .then((data) => {
+        //TODO do stuff with this data
+        console.log(data);
+      });
+  }, []);
+
   const handleModeChange = (value: string) => {
     switch (value) {
       case "analysis":
@@ -40,7 +49,7 @@ export default function Home() {
     switch (mode) {
       case Modes.PRACTICE:
         return (
-          <div className="flex h-full flex-col bg-neutral-800"> 
+          <div className="flex h-full flex-col bg-neutral-800">
             <div className="flex flex-row h-full basis-1/8"></div>
             <div className="flex flex-row bottom-0 left-1/2 p-2 mb-4 rounded-lg bg-neutral-900">
               <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
