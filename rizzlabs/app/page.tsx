@@ -22,6 +22,7 @@ enum Modes {
 
 export default function Home() {
   const [mode, setMode] = useState(Modes.ANALYSIS);
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/home")
@@ -46,6 +47,26 @@ export default function Home() {
     }
   };
 
+  const [messages, setMessages] = useState([
+    { text: "Hey, how are you?", isSender: false },
+    { text: "I'm good, how about you?", isSender: true },
+    { text: "Doing well, thanks!", isSender: false },
+  ]);
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      //TODO: SEND 'newMessage' data to API and do stuff
+      setMessages([...messages, { text: newMessage, isSender: true }]);
+      setNewMessage("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   const renderSwitch = (mode: Modes) => {
     switch (mode) {
       case Modes.PRACTICE:
@@ -59,10 +80,14 @@ export default function Home() {
                 </Button>
                 <input
                   type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
                   className="h-full flex-1 px-4 py-2 bg-transparent outline-none text-white"
                 />
-                <Button className="px-4 py-2 mr-2">Send</Button>
+                <Button onClick={sendMessage} className="px-4 py-2 mr-2">
+                  Send
+                </Button>
               </div>
             </div>
           </div>
@@ -100,7 +125,7 @@ export default function Home() {
       </div>
 
       <div className="flex basis-6/12 flex-col bg-neutral-800">
-        <ChatWindow></ChatWindow>
+        <ChatWindow messages={messages}></ChatWindow>
         {renderSwitch(mode)}
       </div>
     </div>
