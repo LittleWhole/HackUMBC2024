@@ -23,15 +23,19 @@ export default function Home() {
             <Button className="px-3 py-3 ml-2">
               <FilePlusIcon />
             </Button>
-        <div className="flex flex-row bottom-0 left-1/2 p-4 bg-neutral-900">
-          <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
-            <Button className="px-3 py-3 ml-2"><FilePlusIcon /></Button>
-            <input
-              type="text"
-              placeholder="Type a message..."
-              className="h-full flex-1 px-4 py-2 bg-transparent outline-none text-white"
-            />
-            <Button className="px-4 py-2 mr-2">Send</Button>
+            <div className="flex flex-row bottom-0 left-1/2 p-4 bg-neutral-900">
+              <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
+                <Button className="px-3 py-3 ml-2">
+                  <FilePlusIcon />
+                </Button>
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  className="h-full flex-1 px-4 py-2 bg-transparent outline-none text-white"
+                />
+                <Button className="px-4 py-2 mr-2">Send</Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
