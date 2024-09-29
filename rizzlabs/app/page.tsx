@@ -68,13 +68,6 @@ export default function Home() {
       ]));
 
       setTexts(JSON.parse(localStorage.getItem("conversation")!));
-
-      fetch("http://localhost:8080/api/home")
-        .then((response) => response.json())
-        .then((data) => {
-          //TODO do stuff with this data
-          console.log(data);
-        });
     }
   }, []);
 
@@ -98,13 +91,14 @@ export default function Home() {
         setMode(Modes.PRACTICE);
         break;
       case "suggestions":
+        console.log(messagesForSuggestions);
+
+        setMode(Modes.SUGGESTIONS);
         setMessagesForSuggestions([...messages,
           { role: 'system', content: [{ type: 'text', text: "You are now a helpful assistant that gives suggestions to the user on what messages to proceed with next. You will provide suggestions based on the user's previous messages and the context of the conversation. Format your response in JSON, as a JSON array with objects of format `{\"content\": <insert content here>, \"rationale\": <insert rationale here>}`." }] }
         ]);
-
-        setMode(Modes.SUGGESTIONS);
-        const suggestions = await fetchSuggestions();
-      setSuggestions(suggestions);
+        const Jsuggestions = await fetchSuggestions();
+      setSuggestions(Jsuggestions);
         break;
     }
   };
@@ -125,6 +119,9 @@ export default function Home() {
         });
         const botMessage = { role: 'assistant', content: [{ type: 'text', text: completion.choices[0].message.content!.trim() }] };
         setMessages(prevMessages => [...prevMessages, botMessage]);
+        setMessagesForSuggestions([...messages,
+          { role: 'system', content: [{ type: 'text', text: "You are now a helpful assistant that gives suggestions to the user on what messages to proceed with next. You will provide suggestions based on the user's previous messages and the context of the conversation. Format your response in JSON, as a JSON array with objects of format `{\"content\": <insert content here>, \"rationale\": <insert rationale here>}`." }] }
+        ]);
       } catch (error) {
         console.error("Error sending message to OpenAI API:", error);
       }
@@ -141,7 +138,10 @@ export default function Home() {
     try {
       const completion = await openai.chat.completions.create({
         model: "gpt-4o-mini",
-        messages: messagesForSuggestions
+        messages: messagesForSuggestions,
+        response_format: {
+          "type": "json_object"
+        }
       });
       const botMessage = { role: 'assistant', content: [{ type: 'text', text: completion.choices[0].message.content!.trim() }] };
       return botMessage;
