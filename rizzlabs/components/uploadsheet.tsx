@@ -11,10 +11,15 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export default function UploadSheet() {
+export default function UploadSheet(setConvo: Dispatch<SetStateAction<never[]>>) {
     const [input, setInput] = useState("");
+
+    const handleSave = () => {
+        setConvo(JSON.parse(input));
+        console.log("Conversation saved:", input);
+    };
 
     return (
         <div className="mr-4 mt-4 self-end">
@@ -39,10 +44,11 @@ export default function UploadSheet() {
                     </div>
                     <SheetFooter>
                         <SheetClose asChild>
-                            <Button type="submit">Save changes</Button>
+                            <Button type="button" onClick={handleSave}>Save changes</Button>
                         </SheetClose>
                     </SheetFooter>
                 </SheetContent>
             </Sheet>
-        </div>)
+        </div>
+    );
 }

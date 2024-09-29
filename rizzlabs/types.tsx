@@ -28,3 +28,8 @@ export enum Status {
     GOOD = "good",
     EXCELLENT = "excellent",
 }
+
+export type Suggestion = {
+    content: string,
+    rationale: string
+}
