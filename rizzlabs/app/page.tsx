@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/select";
 import { useState, useEffect } from "react";
 import Analysis from "@/components/analysis";
-
+import ChatWindow from "../components/ui/chat-window";
+import Message from "../components/ui/chat-window";
 enum Modes {
   ANALYSIS,
   PRACTICE,
@@ -49,7 +50,7 @@ export default function Home() {
     switch (mode) {
       case Modes.PRACTICE:
         return (
-          <div className="flex h-full flex-col bg-neutral-800">
+          <div className="flex flex-col bg-neutral-800">
             <div className="flex flex-row h-full basis-1/8"></div>
             <div className="flex flex-row bottom-0 left-1/2 p-2 mb-4 rounded-lg bg-neutral-900">
               <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
@@ -67,11 +68,11 @@ export default function Home() {
           </div>
         );
       case Modes.ANALYSIS:
-        <div className="flex h-full flex-col bg-neutral-800">
+        <div className="flex flex-col bg-neutral-800">
           <Analysis />
         </div>;
       case Modes.SUGGESTIONS:
-        <div className="flex h-full flex-col bg-neutral-800"></div>;
+        <div className="flex flex-col bg-neutral-800"></div>;
     }
   };
 
@@ -97,10 +98,11 @@ export default function Home() {
           </Select>
         </div>
       </div>
+
       <div className="flex basis-6/12 flex-col bg-neutral-800">
+        <ChatWindow></ChatWindow>
         {renderSwitch(mode)}
       </div>
-      <div className="flex basis-3/12 flex-col bg-neutral-800"></div>
     </div>
   );
 }
