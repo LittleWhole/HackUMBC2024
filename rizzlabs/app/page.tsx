@@ -16,6 +16,8 @@ import { Party } from "@/types";
 import { Sentiment } from "@/types";
 import { Status } from "@/types";
 
+import ChatWindow from "../components/ui/chat-window";
+import Message from "../components/ui/chat-window";
 enum Modes {
   ANALYSIS,
   PRACTICE,
@@ -24,6 +26,7 @@ enum Modes {
 
 export default function Home() {
   const [mode, setMode] = useState(Modes.ANALYSIS);
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/home")
@@ -48,11 +51,31 @@ export default function Home() {
     }
   };
 
+  const [messages, setMessages] = useState([
+    { text: "Hey, how are you?", isSender: false },
+    { text: "I'm good, how about you?", isSender: true },
+    { text: "Doing well, thanks!", isSender: false },
+  ]);
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      //TODO: SEND 'newMessage' data to API and do stuff
+      setMessages([...messages, { text: newMessage, isSender: true }]);
+      setNewMessage("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   const renderSwitch = (mode: Modes) => {
     switch (mode) {
       case Modes.PRACTICE:
         return (
-          <div className="flex h-full flex-col bg-neutral-800">
+          <div className="flex flex-col bg-neutral-800">
             <div className="flex flex-row h-full basis-1/8"></div>
             <div className="flex flex-row bottom-0 left-1/2 p-2 mb-4 rounded-lg bg-neutral-900">
               <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
@@ -61,10 +84,14 @@ export default function Home() {
                 </Button>
                 <input
                   type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Type a message..."
                   className="h-full flex-1 px-4 py-2 bg-transparent outline-none text-white"
                 />
-                <Button className="px-4 py-2 mr-2">Send</Button>
+                <Button onClick={sendMessage} className="px-4 py-2 mr-2">
+                  Send
+                </Button>
               </div>
             </div>
           </div>
@@ -95,8 +122,7 @@ export default function Home() {
           ]}/>
         </div>);
       case Modes.SUGGESTIONS:
-        <div className="flex h-full flex-col bg-neutral-800"> 
-        </div>
+        <div className="flex flex-col bg-neutral-800"></div>;
     }
   };
 
@@ -122,10 +148,11 @@ export default function Home() {
           </Select>
         </div>
       </div>
+
       <div className="flex basis-6/12 flex-col bg-neutral-800">
+        <ChatWindow messages={messages}></ChatWindow>
         {renderSwitch(mode)}
       </div>
-      <div className="flex basis-3/12 flex-col bg-neutral-800"></div>
     </div>
   );
 }
