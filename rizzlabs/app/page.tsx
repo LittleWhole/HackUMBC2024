@@ -10,17 +10,30 @@ import {
   SelectLabel,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose
+} from "@/components/ui/sheet"
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+
 import { useState, useEffect } from "react";
 import Analysis from "@/components/analysis";
 import { Party } from "@/types";
 import { Sentiment } from "@/types";
 import { Status } from "@/types";
-import axios from 'axios';
 import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: "", dangerouslyAllowBrowser: true });
 
 import ChatWindow from "../components/ui/chat-window";
-import Message from "../components/ui/message";
+import { Textarea } from "@/components/ui/textarea";
+
 enum Modes {
   ANALYSIS,
   PRACTICE,
@@ -169,14 +182,41 @@ export default function Home() {
                 <SelectItem value="suggestions">Suggestions</SelectItem>
               </SelectGroup>
             </SelectContent>
-          </Select>
+          </Select></div>
         </div>
-      </div>
 
       <div className="flex basis-6/12 flex-col bg-neutral-800">
         {renderSwitch(mode)}
       </div>
-      <div className="flex basis-3/12 flex-col bg-neutral-800"></div>
+      <div className="flex basis-3/12 flex-col bg-neutral-800">
+      <div className="mr-4 mt-4 self-end">
+          <Sheet>
+      <SheetTrigger asChild>
+        <Button>Upload</Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Upload new conversations</SheetTitle>
+          <SheetDescription>
+            Upload updated conversations/DMs from this person to the database.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="conversation">
+              Conversation
+            </Label>
+            <Textarea id="conversation" value="Insert formatted conversation here..." className="col-span-3" />
+          </div>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit">Save changes</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+    </div></div>
     </div>
   );
 }

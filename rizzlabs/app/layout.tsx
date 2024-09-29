@@ -14,6 +14,7 @@ const geistMono = localFont({
 });
 
 import { Space_Grotesk } from 'next/font/google'
+import { ThemeProvider } from "@/components/theme-provider";
  
 // If loading a variable font, you don't need to specify the font weight
 const space_grotesk = Space_Grotesk({
@@ -38,7 +39,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+          {children}
+          </ThemeProvider>
       </body>
     </html>
   );
