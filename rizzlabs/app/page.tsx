@@ -19,7 +19,6 @@ import axios from 'axios';
 import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: "", dangerouslyAllowBrowser: true });
 
-
 import ChatWindow from "../components/ui/chat-window";
 import Message from "../components/ui/message";
 enum Modes {
@@ -56,26 +55,26 @@ export default function Home() {
   };
 
   const [messages, setMessages] = useState([
-    { text: "Hey, how are you?", isSender: false },
-    { text: "I'm good, how about you?", isSender: true },
-    { text: "Doing well, thanks!", isSender: false },
+    { role: 'user', content: [{ type: 'text', text: "Hey, how are you?" }] },
+    { role: 'assistant', content: [{ type: 'text', text: "omg ily <3" }] },
+    { role: 'user', content: [{ type: 'text', text: "ilysm too <3 <3" }] },
+    { role: 'assistant', content: [{ type: 'text', text: "lets just get married already pweaaaase <3" }] },
   ]);
 
   const sendMessage = async () => {
     if (newMessage.trim()) {
-      const userMessage = { text: newMessage, isSender: true };
+      const userMessage = { role: 'user', content: [{ type: 'text', text: newMessage }] };
       setMessages([...messages, userMessage]);
       setNewMessage("");
 
       try {
         const completion = await openai.chat.completions.create({
-          model: "gpt-4o",
+          model: "gpt-4",
           messages: [
-              {"role": "user", "content": newMessage}
+            { role: "user", content: newMessage }
           ]
-      });
-
-        const botMessage = { text: completion.choices[0].message.content!.trim(), isSender: false };
+        });
+        const botMessage = { role: 'assistant', content: [{ type: 'text', text: completion.choices[0].message.content!.trim() }] };
         setMessages(prevMessages => [...prevMessages, botMessage]);
       } catch (error) {
         console.error("Error sending message to OpenAI API:", error);
@@ -97,7 +96,8 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-white px-2 mt-8">Practice</h1>
             <p className="text-white px-2">In practice mode, the other party is emulated by this chatbot based on previous messages.</p>
             <div className="flex flex-row h-full basis-1/8">
-            <ChatWindow messages={messages}></ChatWindow></div>
+              <ChatWindow messages={messages}></ChatWindow>
+            </div>
             <div className="flex flex-row bottom-0 left-1/2 p-2 mb-4 rounded-lg bg-neutral-900">
               <div className="flex h-12 w-full rounded-lg bg-neutral-800 items-center justify-center">
                 <Button className="px-3 py-3 ml-2">

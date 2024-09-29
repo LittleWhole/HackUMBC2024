@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Message from "./message";
 
 type ChatWindowProps = {
-  messages: { text: string; isSender: boolean }[];
+  messages: { role: 'system' | 'user' | 'assistant'; content: { type: string; text: string }[] }[];
 };
 
 const ChatWindow: React.FC<ChatWindowProps> = ({ messages }) => {
   return (
     <div className="w-full h-[80vh] bg-neutral-800 p-5 overflow-y-auto">
-      {messages.map((msg, idx) => (
-        <Message key={idx} text={msg.text} isSender={msg.isSender} />
+      {messages.filter(msg => msg.role !== 'system').map((msg, idx) => (
+        <Message key={idx} role={msg.role} content={msg.content} />
       ))}
     </div>
   );
